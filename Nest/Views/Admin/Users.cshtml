@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Nest.Models.User>
+
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+    <div class="card bg-dark text-light border-light">
+        <h2 class="card-header border-light col-12">Users</h2>
+        <div class="card-body">
+            <table class="mb-3">
+                <tr><td colspan="5"><h3>Actives</h3></td></tr>
+                <tr>
+                    <th class="text-right pr-3">Id</th>
+                    <th>Handle</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Icon</th>
+                </tr>
+                @foreach (var user in Model.Where(u => u.Buzzing)) {
+                    <tr>
+                        <td class="text-right pr-3">@user.Id</td>
+                        <td>@Html.ActionLink(user.Handle, "EditUser", new { user.Id }, new { @class = "text-light text-decoration-none pr-3" })</td>
+                        <td>@user.Email</td>
+                        <td>@user.Role</td>
+                        <td>@user.Icon</td>
+                        <td class="text-center">
+                            @using (Html.BeginForm("DeleteUser", "Admin")) {
+                                @Html.Hidden("id", user.Id)
+                                <input type="submit" class="btn text-light" value="delete" />
+                            }
+                        </td>
+                    </tr>
+                }
+                <tr><td colspan="5"><h3>Inactives</h3></td></tr>
+                <tr>
+                    <th class="text-right pr-3">Id</th>
+                    <th>Handle</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Icon</th>
+                </tr>
+                @foreach (var user in Model.Where(u => !u.Buzzing)) {
+                    <tr>
+                        <td class="text-right pr-3">@user.Id</td>
+                        <td>@Html.ActionLink(user.Handle, "EditUser", new { user.Id }, new { @class = "text-light text-decoration-none pr-3" })</td>
+                        <td>@user.Email</td>
+                        <td>@user.Role</td>
+                        <td>@user.Icon</td>
+                        <td class="text-center">
+                            @using (Html.BeginForm("RestoreUser", "Admin")) {
+                                @Html.Hidden("id", user.Id)
+                                <input type="submit" class="btn text-light" value="restore" />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+            <table>
+                
+            </table>
+        </div>
+        <div class="card-footer border-light">
+           @Html.ActionLink("new user", "CreateUser", null, new { @class = "btn text-light" })
+           @Html.ActionLink("return", "Admin", null, new { @class = "btn text-light" })
+        </div>
+    </div>

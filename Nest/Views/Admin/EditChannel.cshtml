@@ -1,0 +1,29 @@
+﻿@model Nest.API.Models.Channel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card bg-dark text-light border-light">
+    <h3 class="card-header border-light">@(Model.Name ?? "New channel")</h3>
+
+   @using (Html.BeginForm("EditChannel", "Admin")) {
+        <div class="card-body">
+           @Html.HiddenFor(c => c.Id)
+           @foreach (var p in ViewData.ModelMetadata.Properties) {
+                if (p.PropertyName != "Id") {
+                    <div class="form-group">
+                        <label>@(p.DisplayName ?? p.PropertyName)</label>
+                       @Html.TextBox(p.PropertyName, null, new { @class = "form-control" })
+                       @Html.ValidationMessage(p.PropertyName)
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="card-footer border-light">
+            <input type="submit" value="save" class="btn text-light" />
+           @Html.ActionLink("cancel", "Channels", null, new { @class = "btn text-light" })
+        </div>
+    }
+</div>

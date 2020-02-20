@@ -1,0 +1,11 @@
+﻿@model Nest.API.Models.Post
+
+<div class="card well-sm bg-light mb-2">
+    <div class="card-body">
+       @if (Model.Title != "") {
+            <h5 class="card-title">@Model.Title</h5>
+        }
+        <p class="card-text">@Model.Message</p>
+        <p class="small text-muted">Posted by @Model.User.Handle at @Model.Timestamp in @Html.ActionLink((string) Model.Channel.Name, "Feed", new { category = Model.Channel.Name, page = 1 })</p>
+    </div>
+</div>

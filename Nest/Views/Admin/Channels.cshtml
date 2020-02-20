@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Nest.API.Models.Channel>
+
+@{
+    ViewBag.Title = "Channels";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+    <div class="card bg-dark text-light border-light">
+        <h3 class="card-header border-light col-12">Channels</h3>
+        <div class="card-body">
+            <table>
+                <tr>
+                    <th class="text-right pr-3">Id</th>
+                    <th>Name</th>
+                    <th>Parent</th>
+                </tr>
+                @foreach (var channel in Model) {
+                    <tr>
+                        <td class="text-right pr-3">@channel.Id</td>
+                        <td>@Html.ActionLink(channel.Name, "EditChannel", new { channel.Id }, new { @class = "text-light text-decoration-none pr-3" })</td>
+                        <td>@channel.Parent</td>
+                        <td class="text-center">
+                            @using (Html.BeginForm("DeleteChannel", "Admin")) {
+                                @Html.Hidden("id", channel.Id)
+                                <input type="submit" class="btn text-light" value="Delete" />
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="card-footer border-light">
+            @Html.ActionLink("new channel", "CreateChannel", null, new { @class = "btn text-light" })
+            @Html.ActionLink("return", "Admin", null, new { @class = "btn text-light" })
+        </div>
+    </div>

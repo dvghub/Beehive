@@ -1,0 +1,18 @@
+﻿@model Nest.ViewModels.PostListViewModel
+
+<div class="row panel">
+    <div class="col-3">
+        @Html.Action("FeedMenu", "Nav")
+    </div>
+    <div class="col-9">
+        @foreach (var post in Model.Posts) {
+            @Html.Partial("Post", post)
+        }
+    </div>
+</div>
+
+@if (Model.PaginationInfo.TotalPages > 1) {
+    <div class="pagination">
+        @Html.PageLinks(Model.PaginationInfo, x => Url.Action("Feed", new { page = x, category = Model.CurrentCategory }))
+    </div>
+}

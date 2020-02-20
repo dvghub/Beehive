@@ -1,0 +1,11 @@
+D:\Educom\Projects\Wasp\Wasp\Nest.API\bin\Debug\Nest.API.dll.config
+D:\Educom\Projects\Wasp\Wasp\Nest.API\bin\Debug\Nest.API.dll
+D:\Educom\Projects\Wasp\Wasp\Nest.API\bin\Debug\Nest.API.pdb
+D:\Educom\Projects\Wasp\Wasp\Nest.API\bin\Debug\EntityFramework.dll
+D:\Educom\Projects\Wasp\Wasp\Nest.API\bin\Debug\EntityFramework.SqlServer.dll
+D:\Educom\Projects\Wasp\Wasp\Nest.API\bin\Debug\EntityFramework.xml
+D:\Educom\Projects\Wasp\Wasp\Nest.API\bin\Debug\EntityFramework.SqlServer.xml
+D:\Educom\Projects\Wasp\Wasp\Nest.API\obj\Debug\Nest.API.csprojAssemblyReference.cache
+D:\Educom\Projects\Wasp\Wasp\Nest.API\obj\Debug\Nest.API.csproj.CopyComplete
+D:\Educom\Projects\Wasp\Wasp\Nest.API\obj\Debug\Nest.API.dll
+D:\Educom\Projects\Wasp\Wasp\Nest.API\obj\Debug\Nest.API.pdb

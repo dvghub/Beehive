@@ -1,0 +1,29 @@
+﻿@model Nest.Models.User
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card bg-dark text-light border-light">
+    <h3 class="card-header border-light">@(Model.Handle ?? "New user")</h3>
+
+   @using (Html.BeginForm("EditUser", "Admin")) {
+        <div class="card-body">
+           @Html.HiddenFor(c => c.Id)
+           @foreach (var p in ViewData.ModelMetadata.Properties) {
+                if (p.PropertyName != "Id" && p.PropertyName != "Password" && p.PropertyName != "Online") {
+                    <div class="form-group">
+                        <label>@(p.DisplayName ?? p.PropertyName)</label>
+                       @Html.TextBox(p.PropertyName, null, new { @class = "form-control" })
+                       @Html.ValidationMessage(p.PropertyName)
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="card-footer border-light">
+            <input type="submit" value="save" class="btn text-light" />
+           @Html.ActionLink("cancel", "Users", null, new { @class = "btn text-light" })
+        </div>
+    }
+</div>

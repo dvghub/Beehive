@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+    <div class="card bg-dark text-light border-light">
+        <h3 class="card-header border-light">Hello admin, let's cancel some fools</h3>
+        <div class="card-body">
+            <table>
+                <tr>
+                    <td class="pr-5">@Html.ActionLink("Channels", "Channels", null, new { @class = "text-decoratin-none text-light" })</td>
+                    <td>@Html.ActionLink("new channel", "CreateChannel", null, new { @class = "text-decoratin-none text-light" })</td>
+                </tr>
+                <tr>
+                    <td>@Html.ActionLink("Users", "Users", null, new { @class = "text-decoration-none text-light" })</td>
+                    <td>@Html.ActionLink("new user", "CreateUser", null, new { @class = "text-decoratin-none text-light" })</td>
+                </tr>
+            </table>
+        </div>
+    </div>
