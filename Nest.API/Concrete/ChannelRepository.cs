@@ -40,13 +40,11 @@ namespace Nest.API.Concrete {
             Channel channel = Channels.Find(id);
             if (channel == null) return;
             Channels
-                .Where(c => c.Parent == id)
+                .Where(c => c.Parent.Id == id)
                 .ToList()
                 .ForEach(c => Delete(c.Id));
-            nest.Posts
-                .Where(p => p.Channel.Id == id)
-                .ToList()
-                .ForEach(p => {
+            postRepository.Posts.Where(p => p.Channel.Id == id)
+                .ForEachAsync(p => {
                     nest.Comments
                         .Where(c => c.Post.Id == p.Id)
                         .ToList()

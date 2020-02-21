@@ -13,7 +13,7 @@ namespace Nest.Controllers {
         private ChannelRepository channelRepository = new ChannelRepository();
         private UserRepository userRepository = new UserRepository();
 
-        public ViewResult Admin() {
+        public ViewResult Index() {
             return View(); 
         }
 

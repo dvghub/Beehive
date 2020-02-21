@@ -12,6 +12,6 @@ namespace Nest.API.Models {
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Parent { get; set; }
+        public Channel Parent { get; set; }
     }
 }

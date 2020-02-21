@@ -188,7 +188,7 @@
     <Content Include="Views\Post\Feed.cshtml" />
     <Content Include="Views\Nav\FeedMenu.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
-    <Content Include="Views\Admin\Admin.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Channels.cshtml" />
     <Content Include="Views\Admin\EditChannel.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
