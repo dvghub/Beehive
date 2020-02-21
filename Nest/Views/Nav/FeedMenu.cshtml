@@ -6,7 +6,7 @@
 @foreach (var channel in Model.Channels) {
     @Html.RouteLink(
         channel.Name,
-        new { controller = "Post", action = "Feed", category = channel, page = 1 },
+        new { controller = "Post", action = "Feed", category = channel.Name, page = 1 },
         new { @class = "btn btn-block btn-lg" + (channel.Name == Model.Current ? " btn-warning" : " btn-light") }
     )
 }

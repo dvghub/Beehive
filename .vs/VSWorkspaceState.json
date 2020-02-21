@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Nest",
+    "\\Nest\\Views",
+    "\\Nest\\Views\\Post"
   ],
-  "SelectedNode": "\\NestDB.mdf",
+  "SelectedNode": "\\.gitattributes",
   "PreviewInSolutionExplorer": false
 }

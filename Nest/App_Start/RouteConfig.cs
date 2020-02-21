@@ -19,7 +19,7 @@ namespace Nest {
             routes.MapRoute(
                 null,
                 url: "Feed",
-                defaults: new { controller = "Post", action = "Feed", category = (string)null, page = 1}
+                defaults: new { controller = "Post", action = "Feed", category = (string) null, page = 1}
             );
 
             routes.MapRoute(
@@ -29,7 +29,7 @@ namespace Nest {
             );
 
             routes.MapRoute(
-                null,
+                "CategoryFeed",
                 url: "Feed/{category}/{page}",
                 defaults: new { controller = "Post", action = "Feed", page = @"\d+" }
             );
