@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 
 namespace Nest.ViewModels {
-    public class ChannelMenuModel {
+    public class ChannelMenuViewModel {
         public List<Channel> Channels { get; set; }
         public string Current { get; set; }
     }

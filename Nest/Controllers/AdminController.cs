@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Nest.Controllers {
+    [Authorize]
     public class AdminController : Controller {
         private ChannelRepository channelRepository = new ChannelRepository();
         private UserRepository userRepository = new UserRepository();

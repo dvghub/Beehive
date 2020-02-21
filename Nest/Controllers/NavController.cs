@@ -14,7 +14,7 @@ namespace Nest.Controllers {
         public PartialViewResult FeedMenu(string category = null) {
             List<Channel> channels = channelRepository.Channels.ToList();
 
-            ChannelMenuModel model = new ChannelMenuModel {
+            ChannelMenuViewModel model = new ChannelMenuViewModel {
                 Channels = channels,
                 Current = category
             };

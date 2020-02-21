@@ -8,7 +8,7 @@ using Nest.ViewModels;
 
 namespace Nest.Helpers.HTML {
     public static class PaginationHelper {
-        public static MvcHtmlString PageLinks(this HtmlHelper html, PaginationInfo pagingInfo, Func<int, string> pageUrl) {
+        public static MvcHtmlString PageLinks(this HtmlHelper html, PaginationViewModel pagingInfo, Func<int, string> pageUrl) {
             StringBuilder result = new StringBuilder();
             for (int i = 1; i <= pagingInfo.TotalPages; i++) {
                 TagBuilder tag = new TagBuilder("a");

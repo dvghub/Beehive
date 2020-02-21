@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace Nest.ViewModels {
-    public class PaginationInfo {
+    public class PaginationViewModel {
         public int TotalItems { get; set; }
         public int ItemsPerPage { get; set; }
         public int CurrentPage { get; set; }

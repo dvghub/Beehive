@@ -27,7 +27,7 @@ namespace Nest.Controllers {
 
             PostListViewModel model = new PostListViewModel {
                 Posts = posts,
-                PaginationInfo = new PaginationInfo {
+                PaginationInfo = new PaginationViewModel {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
                     TotalItems = total
