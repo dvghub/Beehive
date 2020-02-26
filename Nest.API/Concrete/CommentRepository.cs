@@ -28,7 +28,7 @@ namespace Nest.API.Concrete {
         public Comment Update(Comment c) {
             Comment comment = Comments.Find(c.Id);
             if (comment == null) return null;
-            comment.Message = c.Message;
+            comment.Text = c.Text;
             nest.SaveChanges();
             return comment;
         }

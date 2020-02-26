@@ -15,10 +15,11 @@
                 <th>Parent</th>
             </tr>
             @foreach (var channel in Model) {
+                if (channel.Id == 1) { continue; }
                 <tr>
                     <td class="text-right pr-3">@channel.Id</td>
                     <td>@Html.ActionLink(channel.Name, "EditChannel", new { channel.Id }, new { @class = "text-light text-decoration-none pr-3" })</td>
-                    <td>@channel.Parent</td>
+                    <td>@(channel.Parent == null ? "None" : channel.Parent.Name)</td>
                     <td class="text-center">
                         @using (Html.BeginForm("DeleteChannel", "Admin")) {
                             @Html.Hidden("id", channel.Id)

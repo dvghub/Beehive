@@ -1,6 +1,7 @@
 ﻿using Nest.API.Concrete;
 using Nest.API.Models;
 using Nest.Models;
+using Nest.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,35 +11,52 @@ using System.Web.Mvc;
 namespace Nest.Controllers {
     [Authorize]
     public class AdminController : Controller {
-        private ChannelRepository channelRepository = new ChannelRepository();
-        private UserRepository userRepository = new UserRepository();
+        private readonly ChannelRepository channelRepository = new ChannelRepository();
+        private readonly UserRepository userRepository = new UserRepository();
 
         public ViewResult Index() {
             return View(); 
         }
 
         public ViewResult Channels() {
-            return View(channelRepository.Channels);
+            var channels = channelRepository.Channels.ToList();
+            channels.Sort( (a, b) => a.Id.CompareTo(b.Id) );
+            return View(channels);
         }
 
         public ViewResult CreateChannel() {
-            return View("EditChannel", new Channel(-1));
+            EditChannelViewModel model = new EditChannelViewModel {
+                Channel = new Channel(-1),
+                Channels = channelRepository.Channels.ToHashSet()
+            };
+            return View("EditChannel", model);
         }
 
         public ViewResult EditChannel(int id) {
             Channel channel = channelRepository.Channels
                 .FirstOrDefault(p => p.Id == id);
-            return View(channel);
+            EditChannelViewModel model = new EditChannelViewModel {
+                Channel = channel,
+                Channels = channelRepository.Channels.ToHashSet(),
+                ParentId = channel.Parent.Id
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult EditChannel(Channel channel) {
+        public ActionResult EditChannel(EditChannelViewModel m) {
+            m.Channels = channelRepository.Channels.ToHashSet();
+            m.Channel.Parent = m.Channels.First(ch => ch.Id == m.ParentId);
+            ModelState.Clear();
+            TryValidateModel(m);
+            TryValidateModel(m.Channel, "Channel");
+            TryValidateModel(m.Channel.Parent, "Channel.Parent");
             if (ModelState.IsValid) {
-                channelRepository.CreateOrUpdate(channel);
-                TempData["message"] = string.Format("{0} has been saved.", channel.Name);
+                channelRepository.CreateOrUpdate(m.Channel);
+                TempData["message"] = string.Format("{0} has been saved.", m.Channel.Name);
                 return RedirectToAction("Channels");
             }
-            return View(channel);
+            return View(m);
         }
 
         [HttpPost]

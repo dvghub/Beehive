@@ -9,16 +9,16 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body class="bg-dark">
+<body class="bg-dark pr-0">
         <nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning">
             <div class="container col-12 col-md-8">
                 @Html.ActionLink("BeeHive", "Index", "Index", new { area = "" }, new { @class = "navbar-brand" })
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="nav">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             @Html.ActionLink("Feed", "Feed", "Post", null, new { @class = "text-dark text-decoration-none" })
@@ -29,12 +29,12 @@
             
         </nav>
     
-    <div class="container body-content col-12 col-lg-8">
+    <div class="container body-content col-12 col-lg-8 pt-0">
         @RenderBody()
         <hr >
         <footer class="bg-warning fixed-bottom">
             <div class="container col-12 col-md-8">
-                <p>&copy; @DateTime.Now - BeeHive</p>
+                <p>&copy; @DateTime.Now.Year - BeeHive</p>
             </div>
         </footer>
     </div>

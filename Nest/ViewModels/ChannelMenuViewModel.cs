@@ -8,5 +8,6 @@ namespace Nest.ViewModels {
     public class ChannelMenuViewModel {
         public List<Channel> Channels { get; set; }
         public string Current { get; set; }
+        public int Parent { get; set; }
     }
 }

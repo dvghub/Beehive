@@ -11,12 +11,14 @@ namespace Nest.Controllers {
     public class NavController : Controller {
         private readonly ChannelRepository channelRepository = new ChannelRepository();
 
-        public PartialViewResult FeedMenu(string category = null) {
+        public PartialViewResult ChannelMenu(string category = null) {
             List<Channel> channels = channelRepository.Channels.ToList();
+            channels.Sort( (a, b) => a.Id.CompareTo(b.Id));
 
             ChannelMenuViewModel model = new ChannelMenuViewModel {
                 Channels = channels,
-                Current = category
+                Current = category,
+                Parent = 1
             };
 
             return PartialView(model);

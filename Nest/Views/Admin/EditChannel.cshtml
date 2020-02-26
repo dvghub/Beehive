@@ -1,26 +1,25 @@
-﻿@model Nest.API.Models.Channel
+﻿@model Nest.ViewModels.EditChannelViewModel
 
-@{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+@{ Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
 
 <div class="card bg-dark text-light border-light">
-    <h3 class="card-header border-light">@(Model.Name ?? "New channel")</h3>
+    <h3 class="card-header border-light">@(Model.Channel.Name ?? "New channel")</h3>
 
    @using (Html.BeginForm("EditChannel", "Admin")) {
         <div class="card-body">
-           @Html.HiddenFor(c => c.Id)
-           @foreach (var p in ViewData.ModelMetadata.Properties) {
-                if (p.PropertyName != "Id") {
-                    <div class="form-group">
-                        <label>@(p.DisplayName ?? p.PropertyName)</label>
-                       @Html.TextBox(p.PropertyName, null, new { @class = "form-control" })
-                       @Html.ValidationMessage(p.PropertyName)
-                    </div>
-                }
-            }
+        
+            @Html.HiddenFor(model => model.Channel.Id)
+            <div class="form-group">
+                <label>Name</label>
+                @Html.TextBoxFor(model => model.Channel.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Channel.Name)
+            </div>
+            <div class="form-group">
+                <label>Parent</label>
+                @Html.DropDownListFor(model => model.ParentId, new SelectList(Model.Channels, "Id", "Name", Model.Channel.Parent == null ? 0 : Model.Channel.Parent.Id), null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ParentId)
+            </div>
         </div>
-
         <div class="card-footer border-light">
             <input type="submit" value="save" class="btn text-light" />
            @Html.ActionLink("cancel", "Channels", null, new { @class = "btn text-light" })

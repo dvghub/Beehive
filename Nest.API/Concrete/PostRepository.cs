@@ -31,7 +31,7 @@ namespace Nest.API.Concrete {
             Post post = Posts.Find(p.Id);
             if (post == null) return null;
             post.Title = p.Title;
-            post.Message = p.Message;
+            post.Text = p.Text;
             nest.SaveChanges();
             return post;
         }

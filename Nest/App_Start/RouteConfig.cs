@@ -29,9 +29,15 @@ namespace Nest {
             );
 
             routes.MapRoute(
-                "CategoryFeed",
+                null,
                 url: "Feed/{category}/{page}",
                 defaults: new { controller = "Post", action = "Feed", page = @"\d+" }
+            );
+
+            routes.MapRoute(
+                null,
+                url: "Admin/{action}/{id}",
+                defaults: new { controller = "Admin", id = @"\d+" }
             );
 
             routes.MapRoute(
