@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Nest.API.Models {
 	public class Post {
+		public Post() { }
+		public Post(int id) { Id = id; }
+
 		[Required]
 		public int Id { get; set; }
 
@@ -18,6 +21,6 @@ namespace Nest.API.Models {
 		[Required(ErrorMessage = "Please select a channel.")]
 		public Channel Channel { get; set; }
 
-		public DateTime Timestamp { get; set; }
+		public DateTime Timestamp { get; set; } = DateTime.Now;
 	}
 }

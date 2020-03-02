@@ -5,8 +5,10 @@ using System.Linq;
 using System.Web;
 
 namespace Nest.ViewModels {
-    public class CreateChannelViewModel {
-        public Channel Channel { get; set; }
+    public class EditPostViewModel {
+        public Post Post { get; set; }
         public HashSet<Channel> Channels { get; set; }
+        public int UserId { get; set; }
+        public int ChannelId { get; set; }
     }
 }

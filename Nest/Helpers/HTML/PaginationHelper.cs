@@ -20,7 +20,7 @@ namespace Nest.Helpers.HTML {
                 if (i == pagingInfo.CurrentPage) {
                     tag.AddCssClass("btn-warning text-dark");
                 }
-                tag.AddCssClass("btn text-light");
+                tag.AddCssClass("btn text-light btn-group");
                 result.Append(tag.ToString());
             }
             return MvcHtmlString.Create(result.ToString());

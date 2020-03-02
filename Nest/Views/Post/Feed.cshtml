@@ -1,20 +1,22 @@
 ﻿@model Nest.ViewModels.PostListViewModel
 
-    <div class="row panel">
-        @Html.Action("ChannelMenu", "Nav")
-        <div class="col-12">
-            @if (Model.Posts.Count() > 0) {
-                foreach (var post in Model.Posts) {
-                    @Html.Partial("Post", post)
-                }
-            } else {
-                <span class="text-light">No posts found.</span>
-            }
-        </div>
-    </div>
+@Html.Action("ChannelMenu", "Nav")
+<div>
+    @if (Model.Posts.Count() > 0) {
+        foreach (var post in Model.Posts) {
+            @Html.Partial("Post", post)
+        }
+    } else {
+        <span class="text-light">No posts found.</span>
+    }
+</div>
 
 @if (Model.PaginationInfo.TotalPages > 1) {
     <div class="pagination">
-       @Html.PageLinks(Model.PaginationInfo, x => Url.Action("Feed", new { page = x, category = Model.CurrentCategory }))
+        @Html.PageLinks(Model.PaginationInfo, x => Url.Action("Feed", "Post", new { page = x, category = Model.CurrentCategory }))
     </div>
 }
+
+<div class="fixed-bottom float-right mb-5 mx-auto col-12 col-lg-8">
+    <a href="@Url.Action("CreatePost", "Post")" class="btn text-dark float-right bg-warning m-1 btn-lg btn-round">+</a>
+</div>

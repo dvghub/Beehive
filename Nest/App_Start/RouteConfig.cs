@@ -36,6 +36,18 @@ namespace Nest {
 
             routes.MapRoute(
                 null,
+                url: "{controller}/Edit/{id}",
+                defaults: new { action = "EditPost", id = @"\d+" }
+            );
+
+            routes.MapRoute(
+                null,
+                url: "{controller}/Create",
+                defaults: new { action = "CreatePost" }
+            );
+
+            routes.MapRoute(
+                null,
                 url: "Admin/{action}/{id}",
                 defaults: new { controller = "Admin", id = @"\d+" }
             );

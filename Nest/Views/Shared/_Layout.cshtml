@@ -4,37 +4,34 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - BeeHive</title>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="bg-dark pr-0">
-        <nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning">
-            <div class="container col-12 col-md-8">
-                @Html.ActionLink("BeeHive", "Index", "Index", new { area = "" }, new { @class = "navbar-brand" })
+    <nav class="navbar navbar-expand-md navbar-light fixed-top bg-warning">
+        <div class="container col-12 col-lg-8">
+            @Html.ActionLink("BeeHive", "Index", "Index", new { area = "" }, new { @class = "navbar-brand" })
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="nav">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            @Html.ActionLink("Feed", "Feed", "Post", null, new { @class = "text-dark text-decoration-none" })
-                        </li>
-                    </ul>
-                </div>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        @Html.ActionLink("Feed", "Feed", "Post", null, new { @class = "text-dark text-decoration-none" })
+                    </li>
+                </ul>
             </div>
-            
-        </nav>
-    
-    <div class="container body-content col-12 col-lg-8 pt-0">
+        </div>
+    </nav>
+
+    <div class="container body-content col-12 col-lg-8 p-0">
         @RenderBody()
-        <hr >
+        <hr>
         <footer class="bg-warning fixed-bottom">
-            <div class="container col-12 col-md-8">
-                <p>&copy; @DateTime.Now.Year - BeeHive</p>
+            <div class="container col-12 col-lg-8">
+                <p class="my-auto">&copy; @DateTime.Now.Year - BeeHive</p>
             </div>
         </footer>
     </div>
@@ -42,5 +39,13 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        $('.dropdown-submenu .dropdown-toggle').on("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            $(this).next('.dropdown-menu').toggle();
+        });
+    </script>
 </body>
 </html>

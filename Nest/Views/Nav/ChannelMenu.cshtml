@@ -1,32 +1,55 @@
 ﻿@model Nest.ViewModels.ChannelMenuViewModel
 
-    <nav class="navbar navbar-expand-md navbar-light bg-light col-12 mb-3">
-        <div class="container col-12">
-            @Html.ActionLink("Feed", "Feed", "Post", new { page = 1 }, new { @class = "navbar-brand" })
-            
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#channelNav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark col-12 mb-3">
+        <div class="container col-12 px-0">
+            @Html.ActionLink("All", "Feed", "Post", new { page = 1 }, new { @class = "text-light pr-1 px-0 btn" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#channelNav" aria-controls="channelNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="channelNav">
-                <ul class="navbar-nav mr-auto">
-                   @foreach (var channel in Model.Channels.Where(c => c.Parent == null || c.Parent.Id == 1)) {
+                <ul class="navbar-nav mr-auto invalid-feedback">
+                   @foreach (var channel in Model.Channels.Where(c => c.Parent != null && c.Parent.Id == 1)) {
                         if (Model.Channels.Where(c => c.Parent != null && c.Parent.Id != 0 && c.Parent.Id == channel.Id).Count() > 0) {
                             <li class="dropdown">
-                                <button class="dropdown-toggle border-0" type="button" data-toggle="dropdown" aria-expanded="false" aria-label="Toggle dropdown" id="@(channel.Name + "Dropdown")">
-                                    <span class="text-dark text-decoration-none">@channel.Name</span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="@(channel.Name + "Dropdown")">
-                                   @Html.ActionLink(channel.Name, "Feed", "Post", new { page = 1, category = channel.Name }, new { @class = "dropdown-item text-decoration-none"})
-                                    <div class="dropdown-divider"></div>
+                                <a href="@Url.Action("Feed", "Post", new { page = 1, category = channel.Name })" class="test dropdown-toggle border-0 bg-dark text-light pt-2 px-0 px-lg-1 btn" data-toggle="dropdown" aria-expanded="false" aria-label="Toggle dropdown" id="@(channel.Name + "Dropdown")">@channel.Name</a>
+                                <ul class="dropdown-menu bg-dark" aria-labelledby="@(channel.Name + "Dropdown")">
                                    @foreach (var child in Model.Channels.Where(c => c.Parent != null && c.Parent.Id == channel.Id)) {
-                                        @Html.ActionLink(child.Name, "Feed", "Post", new { page = 1, category = child.Name }, new { @class = "dropdown-item text-decoration-none"})
+                                        if (Model.Channels.Where(c => c.Parent != null && c.Parent.Id != 0 && c.Parent.Id == child.Id).Count() > 0) {
+                                            <li class="dropdown dropdown-submenu">
+                                                <a href="@Url.Action("Feed", "Post", new { page = 1, category = child.Name })" class="test dropdown-toggle border-0 bg-dark text-light pt-2 px-0 px-lg-1 btn" data-toggle="dropdown" aria-expanded="false" aria-label="Toggle dropdown" id="@(child.Name + "Dropdown")">@child.Name</a>
+                                                <ul class="dropdown-menu bg-dark" aria-labelledby="@(child.Name + "Dropdown")">
+                                                   @foreach (var childchild in Model.Channels.Where(c => c.Parent != null && c.Parent.Id == child.Id)) {
+                                                        if (Model.Channels.Where(c => c.Parent != null && c.Parent.Id != 0 && c.Parent.Id == childchild.Id).Count() > 0) {
+                                                            <li class="dropdown dropdown-submenu">
+                                                                <a href="@Url.Action("Feed", "Post", new { page = 1, category = childchild.Name })" class="test dropdown-toggle border-0 bg-dark text-light pt-2 px-0 px-lg-1 btn" data-toggle="dropdown" aria-expanded="false" aria-label="Toggle dropdown" id="@(childchild.Name + "Dropdown")">@childchild.Name</a>
+                                                                <ul class="dropdown-menu bg-dark" aria-labelledby="@(childchild.Name + "Dropdown")">
+                                                                   @foreach (var childchildchild in Model.Channels.Where(c => c.Parent != null && c.Parent.Id == childchild.Id)) {
+                                                                        <li>
+                                                                            @Html.ActionLink(childchildchild.Name, "Feed", "Post", new { page = 1, category = childchildchild.Name }, new { @class = "text-light btn" })
+                                                                        </li>
+                                                                    }
+                                                                </ul>
+                                                            </li>
+                                                        } else {
+                                                            <li>
+                                                                @Html.ActionLink(childchild.Name, "Feed", "Post", new { page = 1, category = childchild.Name }, new { @class = "text-light btn" })
+                                                            </li>
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
+                                        } else {
+                                            <li>
+                                                @Html.ActionLink(child.Name, "Feed", "Post", new { page = 1, category = child.Name }, new { @class = "text-light btn" })
+                                            </li>
+                                        }
                                     }
-                                </div>
+                                </ul>
                             </li>
                         } else {
-                            <li class="nav-item">
-                               @Html.ActionLink(channel.Name, "Feed", "Post", new { page = 1, category = channel.Name }, new { @class = "text-dark text-decoration-none"})
+                            <li>
+                                @Html.ActionLink(channel.Name, "Feed", "Post", new { page = 1, category = channel.Name }, new { @class = "text-light btn nav-link text-left" })
                             </li>
                         }
                     }

@@ -25,7 +25,7 @@ namespace Nest.Controllers {
         }
 
         public ViewResult CreateChannel() {
-            EditChannelViewModel model = new EditChannelViewModel {
+            var model = new EditChannelViewModel {
                 Channel = new Channel(-1),
                 Channels = channelRepository.Channels.ToHashSet()
             };
@@ -33,9 +33,8 @@ namespace Nest.Controllers {
         }
 
         public ViewResult EditChannel(int id) {
-            Channel channel = channelRepository.Channels
-                .FirstOrDefault(p => p.Id == id);
-            EditChannelViewModel model = new EditChannelViewModel {
+            var channel = channelRepository.Channels.Find(id);
+            var model = new EditChannelViewModel {
                 Channel = channel,
                 Channels = channelRepository.Channels.ToHashSet(),
                 ParentId = channel.Parent.Id
@@ -44,19 +43,23 @@ namespace Nest.Controllers {
         }
 
         [HttpPost]
-        public ActionResult EditChannel(EditChannelViewModel m) {
-            m.Channels = channelRepository.Channels.ToHashSet();
-            m.Channel.Parent = m.Channels.First(ch => ch.Id == m.ParentId);
+        public ActionResult EditChannel(EditChannelViewModel model) {
+            model.Channels = channelRepository.Channels.ToHashSet();
+            model.Channel.Parent = channelRepository.Channels.Find(model.ParentId);
+
             ModelState.Clear();
-            TryValidateModel(m);
-            TryValidateModel(m.Channel, "Channel");
-            TryValidateModel(m.Channel.Parent, "Channel.Parent");
+
+            TryValidateModel(model);
+            TryValidateModel(model.Channel, "Channel");
+            TryValidateModel(model.Channel.Parent, "Channel.Parent");
+
             if (ModelState.IsValid) {
-                channelRepository.CreateOrUpdate(m.Channel);
-                TempData["message"] = string.Format("{0} has been saved.", m.Channel.Name);
+                channelRepository.CreateOrUpdate(model.Channel);
+                TempData["message"] = string.Format("{0} has been saved.", model.Channel.Name);
                 return RedirectToAction("Channels");
             }
-            return View(m);
+
+            return View(model);
         }
 
         [HttpPost]
@@ -75,7 +78,7 @@ namespace Nest.Controllers {
         }
 
         public ViewResult EditUser(int id) {
-            User user = userRepository.Users
+            var user = userRepository.Users
                 .FirstOrDefault(u => u.Id == id);
             return View(user);
         }

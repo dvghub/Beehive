@@ -22,6 +22,12 @@ namespace Nest.API.Concrete {
         }
 
         public Post Create(Post p) {
+            Channel channel = nest.Channels.Attach(p.Channel);
+            nest.SaveChanges();
+            User user = nest.Users.Attach(p.User);
+            nest.SaveChanges();
+            p.Channel = channel;
+            p.User = user;
             Post post = Posts.Add(p);
             nest.SaveChanges();
             return post;
