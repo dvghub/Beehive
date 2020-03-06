@@ -13,7 +13,7 @@ namespace Nest.Controllers {
 
         public PartialViewResult ChannelMenu(string category = null) {
             var channels = channelRepository.Channels.Where(c => c.Id != 22).ToList();
-            channels.Sort( (a, b) => a.Id.CompareTo(b.Id));
+            channels.Sort( (a, b) => a.Name.CompareTo(b.Name));
 
             ChannelMenuViewModel model = new ChannelMenuViewModel {
                 Channels = channels,

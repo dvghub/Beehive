@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Nest.API.Concrete {
-    class CommentRepository : ICommentRepository {
+    public class CommentRepository : ICommentRepository {
         private readonly NestContext nest = new NestContext();
         private readonly BuzzRepository buzzRepository = new BuzzRepository();
 

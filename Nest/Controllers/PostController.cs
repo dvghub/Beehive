@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Nest.API.Concrete;
 using Nest.API.Models;
+using Nest.Models;
 using Nest.ViewModels;
 
 namespace Nest.Controllers {
@@ -16,6 +18,8 @@ namespace Nest.Controllers {
         private const int PageSize = 10;
 
         public ViewResult Feed(string category = null, int page = 1) {
+            Debug.Write(RouteData.Values);
+
             var posts = postRepository.Posts
                 .Include(p => p.Channel)
                 .Include(p => p.User);
@@ -37,23 +41,30 @@ namespace Nest.Controllers {
                     ItemsPerPage = PageSize,
                     TotalItems = total
                 },
-                CurrentCategory = category
+                CurrentCategory = category,
+                User = (User) HttpContext.Session["user"]
             };
 
             return View(model);
         }
 
-        public ViewResult CreatePost() {
+        [Authorize]
+        public ViewResult CreatePost(string channel) {
+            Channel current = channelRepository.Channels.FirstOrDefault(c => c.Name == channel);
+            if (current == null) channel = "General";
+
             var model = new EditPostViewModel {
                 Post = new Post(-1),
-                Channels = channelRepository.Channels.Where(c => c.Name != "Blank").OrderBy(c => c.Id).Include(c => c.Parent).ToHashSet()
+                Channels = channelRepository.Channels.Where(c => c.Name != "Blank").OrderBy(c => c.Name).Include(c => c.Parent).ToHashSet(),
+                ChannelId = current == null ? 1 : current.Id
             };
 
             return View("EditPost", model);
         }
 
+        [Authorize]
         public ViewResult EditPost(int id) {
-            var post = postRepository.Posts.Find(id);
+            var post = postRepository.Posts.Include(p => p.Channel).First(p => p.Id == id);
             var model = new EditPostViewModel {
                 Post = post,
                 Channels = channelRepository.Channels.Where(c => c.Name != "Blank").OrderBy(c => c.Id).Include(c => c.Parent).ToHashSet(),
@@ -63,11 +74,12 @@ namespace Nest.Controllers {
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult EditPost(EditPostViewModel model) {
             model.Channels = channelRepository.Channels.Where(c => c.Name != "Blank").OrderBy(c => c.Id).Include(c => c.Parent).ToHashSet();
-            model.Post.Channel = channelRepository.Channels.Find(model.ChannelId);
-            model.Post.Channel.Parent = channelRepository.Channels.Find(model.Post.Channel.Parent.Id);
+            model.Post.Channel = model.Channels.First(c => c.Id == model.ChannelId);
+            model.Post.Channel.Parent = model.Channels.First(c => c.Parent.Id == model.Post.Channel.Parent.Id);
             model.Post.User = userRepository.Users.Find(model.UserId);
 
             ModelState.Clear();
@@ -86,10 +98,11 @@ namespace Nest.Controllers {
             return View(model);
         }
 
-        public ActionResult DeletePost(int id) {
+        [Authorize]
+        public ActionResult DeletePost(int id, string channel) {
             postRepository.Delete(id);
             TempData["message"] = "Post was deleted";
-            return RedirectToAction("Feed", new { category = postRepository.Posts.Find(id).Channel.Name });
+            return RedirectToAction("Feed", new { channel });
         }
     }
 }

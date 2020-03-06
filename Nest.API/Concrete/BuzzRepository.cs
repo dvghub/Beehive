@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Nest.API.Concrete {
-    class BuzzRepository : IBuzzRepository {
+    public class BuzzRepository : IBuzzRepository {
         private readonly NestContext nest = new NestContext();
 
         public DbSet<Buzz> Buzzes { get { return nest.Buzzes; } }

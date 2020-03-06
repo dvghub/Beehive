@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Nest.Models
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,15 +20,37 @@
 
             <div class="collapse navbar-collapse" id="nav">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    <li class="nav-item mr-2">
                         @Html.ActionLink("Feed", "Feed", "Post", null, new { @class = "text-dark text-decoration-none" })
                     </li>
+                   @if ((User)HttpContext.Current.Session["user"] != null && ((User)HttpContext.Current.Session["user"]).Role == 3) {
+                        <li class="nav-item mr-2">
+                            @Html.ActionLink("THE CAVE", "Index", "Admin", null, new { @class = "text-dark text-decoration-none" })
+                        </li>
+                    }
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    @if (HttpContext.Current.Session["user"] == null) {
+                        <li class="nav-item mr-2">
+                            @Html.ActionLink("Sign up", "Signup", "Account", null, new { @class = "text-dark text-decoration-none" })
+                        </li>
+                        <li class="nav-item mr-2">
+                            @Html.ActionLink("Log in", "Login", "Account", null, new { @class = "text-dark text-decoration-none" })
+                        </li>
+                    } else {
+                        <li class="nav-item mr-2">
+                            @Html.ActionLink(((User)HttpContext.Current.Session["user"]).Handle ?? "Account", "Account", "Account", null , new { @class = "text-dark text-decoration-none" })
+                        </li>
+                        <li class="nav-item mr-2">
+                            @Html.ActionLink("Log out", "Logout", "Account", null, new { @class = "text-dark text-decoration-none" })
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container body-content col-12 col-lg-8 p-0">
+    <div class="container body-content col-12 col-lg-8 pt-3">
         @RenderBody()
         <hr>
         <footer class="bg-warning fixed-bottom">

@@ -22,5 +22,7 @@ namespace Nest.API.Models {
 		public Channel Channel { get; set; }
 
 		public DateTime Timestamp { get; set; } = DateTime.Now;
+
+
 	}
 }

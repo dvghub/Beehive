@@ -19,6 +19,7 @@ namespace Nest.API.Concrete {
 		}
 
 		public User Create(User u) {
+			u.Password = BCrypt.Net.BCrypt.HashPassword(u.Password);
 			User user = Users.Add(u);
 			nest.SaveChanges();
 			return user;
@@ -29,12 +30,20 @@ namespace Nest.API.Concrete {
 			if (user == null) return null;
 			user.Handle = u.Handle;
 			user.Email = u.Email;
-			user.Password = u.Password;
+			user.Password = BCrypt.Net.BCrypt.HashPassword(u.Password);
 			user.Role = u.Role;
 			user.Icon = u.Icon;
+			user.Online = u.Online;
 			user.Buzzing = u.Buzzing;
 			nest.SaveChanges();
 			return user;
+		}
+
+		public void Delete(int id) {
+			User user = Users.Find(id);
+			if (user == null) return;
+			user.Buzzing = false;
+			nest.SaveChanges();
 		}
 
 		public User Restore(int id) {
@@ -45,10 +54,15 @@ namespace Nest.API.Concrete {
 			return user;
 		}
 
-		public void Delete(int id) {
-			User user = Users.Find(id);
-			if (user == null) return;
-			user.Buzzing = false;
+		public void Online(User user) {
+			user.Online = true;
+			Users.Attach(user);
+			nest.SaveChanges();
+		}
+
+		public void Offline(User user) {
+			user.Online = false;
+			Users.Attach(user);
 			nest.SaveChanges();
 		}
 	}

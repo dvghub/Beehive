@@ -24,7 +24,7 @@ namespace Nest.Models {
 		[Required]
 		public int Role { get; set; } = 0;
 
-		public string Icon { get; set; }
+		public string Icon { get; set; } = "defaults/user_default.jpg";
 
 		public bool Online { get; set; } = false;
 

@@ -8,14 +8,13 @@
             }
             <p class="card-text text-muted text-smaller">@(Model.User == null ? "Unknown" : Model.User.Handle)</p>
             <p class="card-text">@Model.Text</p>
-            <p class="small text-muted mb-0">@Model.Timestamp.ToString("H:mm MMMM dd, yyyy") // @(Model.Channel == null ? Html.ActionLink("Archived", "Feed", new { category = "", page = 1 }) : Html.ActionLink((string)Model.Channel.Name, "Feed", new { category = Model.Channel.Name, page = 1 }))</p>
+            <p class="small text-muted mb-0">@Model.Timestamp.ToString("H:mm MMMM dd, yyyy") // @(Model.Channel == null ? Html.ActionLink("Archived", "Feed", "Post", null, new { category = "", page = 1 }) : Html.ActionLink((string)Model.Channel.Name, "Feed", "Post", null, new { category = Model.Channel.Name, page = 1 }))</p>
         </div>
        @if ((User)HttpContext.Current.Session["user"] != null) {
             if (((User)HttpContext.Current.Session["user"]).Id == Model.User.Id || ((User)HttpContext.Current.Session["user"]).Role >= 2) {
                 <div class="card-footer">
-                    @Html.ActionLink("comments (" + 0 + ")", "Post", new { id = Model.Id }, new { @class = "btn" })
-                    @Html.ActionLink("edit", "EditPost", new { id = Model.Id, channel = Model.Channel.Name }, new { @class = "btn" })
-                    @Html.ActionLink("delete", "DeletePost", new { id = Model.Id, channel = Model.Channel.Name }, new { @class = "btn" })
+                    @Html.ActionLink("edit", "EditPost", "Post", new { id = Model.Id, channel = Model.Channel.Name }, new { @class = "btn" })
+                    @Html.ActionLink("delete", "DeletePost", "Post", new { id = Model.Id, channel = Model.Channel.Name }, new { @class = "btn" })
                 </div>
             }
         }

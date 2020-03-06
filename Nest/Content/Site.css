@@ -60,3 +60,73 @@ textarea {
 .dropdown-submenu .dropdown-menu {
     top: 100%;
 }
+
+.clear-none {
+    clear: none;
+}
+
+.clear-left {
+    clear: left;
+}
+
+.clear-right {
+    clear: right;
+}
+
+.text-small {
+    font-size: small;
+}
+
+.text-smaller {
+    font-size: smaller;
+}
+
+.text-supersmall {
+    font-size: x-small;
+}
+
+@media (min-width: 768px) {
+    .clear-md-none {
+        clear: none;
+    }
+
+    .clear-md-left {
+        clear: left;
+    }
+
+    .clear-md-right {
+        clear: right;
+    }
+}
+
+@media (min-width: 992px) {
+    .clear-lg-none {
+        clear: none;
+    }
+
+    .clear-lg-left {
+        clear: left;
+    }
+
+    .clear-lg-right {
+        clear: right;
+    }
+
+    .border-right-lg-none {
+        border-right: none;
+    }
+}
+
+@media (min-width: 1200px) {
+    .clear-xl-none {
+        clear: none;
+    }
+
+    .clear-xl-left {
+        clear: left;
+    }
+
+    .clear-xl-right {
+        clear: right;
+    }
+}

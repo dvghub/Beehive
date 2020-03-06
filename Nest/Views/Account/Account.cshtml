@@ -1,0 +1,64 @@
+﻿@using Nest.Models
+@model Nest.ViewModels.AccountViewModel
+
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="card">
+        <div class="card-body">
+            <img src=@("~/icons/" + Model.User.Icon) class="float-left w-25" />
+            <h3 class="float-left clear-left clear-lg-none">@Model.User.Handle</h3>
+            <p class="float-left clear-left">
+                @(Model.User.Role == 0 ? "Drone" :
+                 Model.User.Role == 1 ? "Worker" :
+                 Model.User.Role == 2 ? "Mod" :
+                 Model.User.Role == 3 ? "Admin" : "Invalid user role")
+            </p>
+            @if (Model.User.Buzzing) {
+                <p class="float-left clear-left text-muted"><span class="oi oi-ban"></span>Inactive</p>
+            } else {
+                if (Model.User.Online) {
+                    <p class="float-left clear-left"><span class="oi oi-media-record text-success"></span>Online</p>
+                }
+            }
+            <div class="col-12 col-lg-6 m-0 float-left clear-left border-right border-warning border-right-lg-none">
+                <h3>Posts</h3>
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link pl-0 @(Model.Segment == 0 ? "text-warning" : "text-dark")" href="@Url.Action("Account", "Account", new { segment = 0 })">Posted</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-0 @(Model.Segment == 1 ? "text-warning" : "text-dark")" href="@Url.Action("Account", "Account", new { segment = 1 })">Buzzed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-0 @(Model.Segment == 2 ? "text-warning" : "text-dark")" href="@Url.Action("Account", "Account", new { segment = 2 })">Commented</a>
+                    </li>
+                </ul>
+                <div class="dropdown-divider"></div>
+                <div>
+                    @switch (Model.Segment) {
+                        case 0:
+                            @Html.Partial("Posted", Model.Posted)
+                            break;
+                        case 1:
+                            @Html.Partial("Buzzed", Model.Buzzed)
+                            break;
+                        case 2:
+                            @Html.Partial("Commented", Model.Commented)
+                            break;
+                    }
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 float-left clear-left clear-lg-none m-0">
+                <h3>Chats</h3>
+                @Html.Partial("Chats", Model.Chats)
+            </div>
+        </div>
+       @if (HttpContext.Current.Session["user"] != null && ((User)HttpContext.Current.Session["user"]).Id == Model.User.Id) {
+            <div class="card-footer">
+                @Html.ActionLink("edit", "EditAccount", "Account", new { user = Model.User }, new { @class = "btn" })
+            </div>
+        }
+    </div>

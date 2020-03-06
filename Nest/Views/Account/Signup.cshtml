@@ -1,0 +1,49 @@
+﻿@model Nest.ViewModels.SignUpViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="card">
+        <h3 class="card-header">Welcome!</h3>
+
+       @using (Html.BeginForm("Signup", "Account")) {
+            <div class="card-body">
+                @Html.HiddenFor(model => model.User.Id)
+                @Html.HiddenFor(model => model.User.Role)
+                @Html.HiddenFor(model => model.User.Online)
+                @Html.HiddenFor(model => model.User.Buzzing)
+                <div class="form-group">
+                    <label>Handle</label>
+                    @Html.TextBoxFor(model => model.User.Handle, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.User.Handle)
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    @Html.TextBoxFor(model => model.User.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.User.Email)
+                </div>
+                <div class="form-group">
+                    <label>New password</label>
+                    @Html.PasswordFor(model => model.NewPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NewPassword)
+                </div>
+                <div class="form-group">
+                    <label>Repeat password</label>
+                    @Html.PasswordFor(model => model.RepeatPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RepeatPassword)
+                </div>
+                <div class="form-group">
+                    <label>Icon</label>
+                    @Html.TextBoxFor(model => model.User.Icon, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.User.Icon)
+                </div>
+            </div>
+
+            <div class="card-footer text-right">
+                <input type="submit" value="save" class="btn" />
+                @Html.ActionLink("cancel", "Index", "Index", null, new { @class = "btn" })
+            </div>
+        }
+    </div>

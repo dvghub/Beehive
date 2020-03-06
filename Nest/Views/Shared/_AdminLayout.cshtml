@@ -20,6 +20,9 @@
         @if (TempData["message"] != null) {
             <div class="alert alert-success">@TempData["message"]</div>
         }
+        <div class="col-12 px-0">
+            @Html.ActionLink("BeeHive", "Index", "Index", null, new { @class = "text-light btn border-light mx-0 mb-1" })
+        </div>
         @RenderBody()
     </div>
 </body>

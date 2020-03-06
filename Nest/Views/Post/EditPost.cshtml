@@ -1,31 +1,32 @@
 ﻿@model Nest.ViewModels.EditPostViewModel
+@using Nest.Models
 
 <div class="card bg-light text-dark mt-3">
     <h3 class="card-header">New post</h3>
 
-   @using (Html.BeginForm("EditPost", "Post")) { 
+   @using (Html.BeginForm("EditPost", "Post")) {
         <div class="card-body">
             @Html.HiddenFor(model => model.Post.Id)
-            @Html.HiddenFor(model => model.UserId, new { Value = "1" })
+            @Html.HiddenFor(model => model.UserId, new { Value = ((User)HttpContext.Current.Session["user"]).Id })
             <div class="form-group">
                 <label>Title</label>
-               @Html.TextBoxFor(model => model.Post.Title, new { @class = "form-control" })
-               @Html.ValidationMessageFor(model => model.Post.Title)
+                @Html.TextBoxFor(model => model.Post.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Post.Title)
             </div>
             <div class="form-group">
                 <label>Text</label>
-               @Html.TextAreaFor(model => model.Post.Text, new { @class = "form-control" })
-               @Html.ValidationMessageFor(model => model.Post.Text)
+                @Html.TextAreaFor(model => model.Post.Text, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Post.Text)
             </div>
             <div class="form-group">
                 <label>Category</label>
-               @Html.DropDownListFor(model => model.ChannelId, new SelectList(Model.Channels, "Id", "Name", Model.Post.Channel == null ? 0 : Model.Post.Channel.Id), null, new { @class = "form-control" })
-               @Html.ValidationMessageFor(model => model.ChannelId)
+                @Html.DropDownListFor(model => model.ChannelId, new SelectList(Model.Channels, "Id", "Name", Model.ChannelId), null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ChannelId)
             </div>
         </div>
         <div class="card-footer">
             <input type="submit" value="save" class="btn text-dark" />
-           @Html.ActionLink("cancel", "Feed", new { category = Model.Post.Channel == null ? "" : Model.Post.Channel.Name }, new { @class = "btn text-dark" })
+            @Html.ActionLink("cancel", "Feed", new { category = Model.Post.Channel == null ? "" : Model.Post.Channel.Name }, new { @class = "btn text-dark" })
         </div>
     }
 </div>

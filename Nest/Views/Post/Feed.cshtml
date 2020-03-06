@@ -17,6 +17,9 @@
     </div>
 }
 
+@if (Model.User != null) {
 <div class="fixed-bottom float-right mb-5 mx-auto col-12 col-lg-8">
-    <a href="@Url.Action("CreatePost", "Post")" class="btn text-dark float-right bg-warning m-1 btn-lg btn-round">+</a>
+    <a href="@Url.Action("CreatePost", "Post", new { channel = Model.CurrentCategory })" class="btn text-dark float-right bg-warning m-1 btn-lg btn-round">+</a>
 </div>
+}
+
