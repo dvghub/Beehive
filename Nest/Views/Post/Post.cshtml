@@ -13,7 +13,7 @@
        @if ((User)HttpContext.Current.Session["user"] != null) {
             if (((User)HttpContext.Current.Session["user"]).Id == Model.User.Id || ((User)HttpContext.Current.Session["user"]).Role >= 2) {
                 <div class="card-footer">
-                    @Html.ActionLink("comments (" + 0 + ")", "Post", new { id = Model.Id }, new { @class = "btn" })
+                    @Html.ActionLink("comments (" + 0 + ")", "ViewPost", new { id = Model.Id }, new { @class = "btn" })
                     @Html.ActionLink("edit", "EditPost", new { id = Model.Id, channel = Model.Channel.Name }, new { @class = "btn" })
                     @Html.ActionLink("delete", "DeletePost", new { id = Model.Id, channel = Model.Channel.Name }, new { @class = "btn" })
                 </div>

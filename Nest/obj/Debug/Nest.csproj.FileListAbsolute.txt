@@ -111,3 +111,4 @@ D:\Educom\Projects\Wasp\Wasp\Nest\bin\EntityFramework6.Npgsql.dll
 D:\Educom\Projects\Wasp\Wasp\Nest\bin\EntityFramework6.Npgsql.xml
 D:\Educom\Projects\Wasp\Wasp\Nest\bin\BCrypt.Net-Next.dll
 D:\Educom\Projects\Wasp\Wasp\Nest\bin\BCrypt.Net-Next.xml
+D:\Educom\Projects\Wasp\Wasp\Nest\obj\Debug\Nest.csproj.CoreCompileInputs.cache

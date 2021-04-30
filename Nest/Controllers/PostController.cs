@@ -15,6 +15,8 @@ namespace Nest.Controllers {
         private readonly PostRepository postRepository = new PostRepository();
         private readonly ChannelRepository channelRepository = new ChannelRepository();
         private readonly UserRepository userRepository = new UserRepository();
+        private readonly BuzzRepository buzzRepository = new BuzzRepository();
+        private readonly CommentRepository commentRepository = new CommentRepository();
         private const int PageSize = 10;
 
         public ViewResult Feed(string category = null, int page = 1) {
@@ -45,6 +47,17 @@ namespace Nest.Controllers {
                 User = (User) HttpContext.Session["user"]
             };
 
+            return View(model);
+        }
+
+        public ViewResult ViewPost(int id) {
+            Post post = postRepository.Posts.Include("User").Include("Channel").FirstOrDefault(p => p.Id == id);
+            var model = new ViewPostViewModel {
+                Post = post,
+                Buzzes = buzzRepository.Buzzes.Where(b => b.Post.Id == post.Id).ToHashSet(),
+                Comments = commentRepository.Comments.Where(c => c.Post.Id == post.Id).ToHashSet(),
+                New = new Comment(-1)
+            };
             return View(model);
         }
 
@@ -103,6 +116,24 @@ namespace Nest.Controllers {
             postRepository.Delete(id);
             TempData["message"] = "Post was deleted";
             return RedirectToAction("Feed", new { channel });
+        }
+
+        [HttpPost]
+        public ActionResult AddComment(ViewPostViewModel model) {
+            ModelState.Clear();
+
+            model.New.Post = postRepository.Posts.Find(model.PostId);
+            model.New.User = (User)HttpContext.Session["user"];
+
+            TryValidateModel(model.New, "New");
+
+            if (ModelState.IsValid) {
+                Comment comment = commentRepository.CreateOrUpdate(model.New);
+                TempData["message"] = "Comment added";
+            }
+
+
+            return RedirectToAction("ViewPost", model.PostId);
         }
     }
 }

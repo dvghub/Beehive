@@ -7,6 +7,10 @@ using System.Web;
 
 namespace Nest.Models {
 	public class Comment {
+		public Comment() { }
+
+		public Comment(int id) { Id = id; }
+
 		[Required]
 		public int Id { get; set; }
 
@@ -20,6 +24,6 @@ namespace Nest.Models {
 		[Required]
 		public string Text { get; set; }
 
-		public DateTime Timestamp { get; set; }
+		public DateTime Timestamp { get; set; } = DateTime.Now;
 	}
 }

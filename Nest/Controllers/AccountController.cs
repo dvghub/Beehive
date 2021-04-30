@@ -34,22 +34,25 @@ namespace Nest.Controllers {
                         .Include("Channel")
                         .Where(p => p.User.Id == user.Id)
                         .Take(5)
+                        .OrderBy(p => p.Timestamp)
                         .ToHashSet();
                     break;
                 case 1:
                     model.Buzzed = postRepository.Posts
                         .Include("User")
                         .Include("Channel")
-                        .Where(p => p.User.Id == user.Id)
+                        .Where(p => buzzRepository.Buzzes.Where(b => b.User.Id == user.Id).Select(b => b.Post.Id).Contains(p.Id))
                         .Take(5)
+                        .OrderByDescending(p => p.Timestamp)
                         .ToHashSet();
                     break;
                 case 2:
                     model.Commented = postRepository.Posts
                         .Include("User")
                         .Include("Channel")
-                        .Where(p => p.User.Id == user.Id)
+                        .Where(p => commentRepository.Comments.Where(c => c.User.Id == user.Id).Select(c => c.Post.Id).Contains(p.Id))
                         .Take(5)
+                        .OrderByDescending(p => p.Timestamp)
                         .ToHashSet();
                     break;
             }
@@ -90,7 +93,7 @@ namespace Nest.Controllers {
                     user.Password = model.NewPassword;
                     user = userRepository.CreateOrUpdate(user);
                     TempData["message"] = "Your account has been created!";
-                    return RedirectToAction("Account", new { user });
+                    return RedirectToAction("Login");
                 }
                 ModelState.AddModelError("RepeatPassword", "Passwords do not match");
             }
